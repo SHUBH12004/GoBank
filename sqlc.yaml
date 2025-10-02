@@ -1,0 +1,23 @@
+version: "2"
+sql:                        # Root container for all SQL configurations
+  - engine: "postgresql"    # Database type (postgresql, mysql, etc.)
+    schema: "./db/migration/" # Location of .sql schema files
+    queries: "./db/query/"  # tells sqlc where to look for .sql query files
+    gen:               # Code generation settings 
+        go:
+            out: "./db/sqlc"   # Output directory for generated code
+            package: "db"      # Go package name for generated code
+            sql_package: "database/sql"   # Use standard library database/sql
+            # Optional feature flags:
+
+            emit_json_tags: true           # Add json tags to struct fields
+
+            #Emit_prepared_queries flag
+            #Use true if you need better protection against SQL injection or plan to
+            #reuse the same query many times with different parameters
+            emit_prepared_queries: false   # Generate prepared query code
+
+            emit_interface: true          # Generate interface definitions
+            emit_exact_table_names: false  # Use exact table names vs. snake_case
+            emit_empty_slices: true
+
